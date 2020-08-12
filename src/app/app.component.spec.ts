@@ -4,9 +4,7 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
     }).compileComponents();
   }));
 
@@ -22,10 +20,12 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('angular-weather');
   });
 
-  it('should render title', () => {
+  it('should say hello world', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('angular-weather app is running!');
+    expect(compiled.querySelector('main p').textContent).toContain(
+      'Hello world!'
+    );
   });
 });
