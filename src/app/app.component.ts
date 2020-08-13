@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { WeatherService } from './weather.service';
 
@@ -8,25 +9,40 @@ import { WeatherService } from './weather.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'angular-weather';
   weatherForm: FormGroup;
-  city: string = '';
   submitted: boolean = false;
   forecast: any[] = [];
 
   constructor(private weatherService: WeatherService) {
     this.weatherForm = new FormGroup({
-      city: new FormControl(this.city, Validators.required),
+      city: new FormControl('', Validators.required),
     });
   }
 
-  ngOnInit() {
-    this.getForecast();
+  get city(): any {
+    return this.weatherForm.get('city').value;
   }
 
   getForecast(): void {
-    this.forecast = this.weatherService.getForecast(this.city);
+    this.weatherService
+      .getForecast(this.city)
+      .toPromise()
+      .then(
+        // TODO res: HttpResponse<ExpectedType>
+        (res: any) => {
+          this.forecast = res.list;
+          console.log('got weather data:', this.forecast);
+        },
+        (err: HttpErrorResponse) => {
+          if (err.statusText === 'Not Found') {
+            alert('City not found.');
+          } else {
+            console.error('Error getting forecast:', err);
+          }
+        }
+      );
   }
 
   onSubmit(): void {

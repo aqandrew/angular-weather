@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 
@@ -6,16 +9,20 @@ import { environment } from '../environments/environment';
   providedIn: 'root',
 })
 export class WeatherService {
+  private apiUrl: string = 'https://api.openweathermap.org/data/2.5/forecast';
   private apiKey: string = environment.WEATHER_API_KEY;
   private forecast: any[] = [];
 
-  constructor() {
-    console.log('weather API key:', this.apiKey);
-  }
+  constructor(private http: HttpClient) {}
 
   getForecast(city: string) {
-    // TODO Make HTTP call to API
-    this.forecast = ['sunny', 'cloudy', 'cloudy', 'cloudy', 'sunny'];
-    return this.forecast;
+    let requestOptions = {
+      params: {
+        q: city,
+        appid: this.apiKey,
+      },
+    };
+
+    return this.http.get(this.apiUrl, requestOptions);
   }
 }

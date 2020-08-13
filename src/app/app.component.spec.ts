@@ -1,5 +1,6 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -9,7 +10,7 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, HttpClientModule],
     })
       .compileComponents()
       .then(() => {
@@ -48,9 +49,11 @@ describe('AppComponent', () => {
     expect(app.submitted).toBeFalse();
   });
 
-  it('should get mock weather data from WeatherService', () => {
+  it('should get 40 3-hour increments of forecast data from WeatherService', () => {
     app.weatherForm.controls['city'].setValue('bar');
     app.onSubmit();
-    expect(app.forecast.length).toBe(5);
+    // TODO How to wait for forecast length to have been set?
+    // (probably Observables)
+    expect(app.forecast.length).toBe(40);
   });
 });
