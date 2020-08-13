@@ -1,1 +1,10 @@
-<main><p>Hello world!</p></main>
+<main>
+  <h1>Hello. ☀️</h1>
+  <form [formGroup]="weatherForm" (ngSubmit)="onSubmit()">
+    <label for="city">Please enter a city:</label>
+    <!-- TODO Why doesn't Chrome say this field is required? -->
+    <input type="text" formControlName="city" required />
+    <button type="submit">Get Forecast</button>
+  </form>
+  <!-- TODO Display forecast here -->
+</main>
