@@ -13,4 +13,9 @@ describe('WeatherService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should return 5 days of mock weather', () => {
+    let mockForecast = service.getForecast('foo');
+    expect(mockForecast.length).toBe(5);
+  });
 });

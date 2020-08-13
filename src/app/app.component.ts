@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { WeatherService } from './weather.service';
@@ -8,11 +8,12 @@ import { WeatherService } from './weather.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-weather';
   weatherForm: FormGroup;
   city: string = '';
   submitted: boolean = false;
+  forecast: any[] = [];
 
   constructor(private weatherService: WeatherService) {
     this.weatherForm = new FormGroup({
@@ -20,8 +21,17 @@ export class AppComponent {
     });
   }
 
+  ngOnInit() {
+    this.getForecast();
+  }
+
+  getForecast(): void {
+    this.forecast = this.weatherService.getForecast(this.city);
+  }
+
   onSubmit(): void {
     console.log('you submitted the form!');
     this.submitted = true;
+    this.getForecast();
   }
 }

@@ -47,4 +47,10 @@ describe('AppComponent', () => {
     app.onSubmit();
     expect(app.submitted).toBeTrue();
   });
+
+  it('should get mock weather data from WeatherService', () => {
+    app.weatherForm.controls['city'].setValue('bar');
+    app.onSubmit();
+    expect(app.forecast.length).toBe(5);
+  });
 });

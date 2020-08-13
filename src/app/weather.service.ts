@@ -14,6 +14,8 @@ export class WeatherService {
   }
 
   getForecast(city: string) {
+    // TODO Make HTTP call to API
+    this.forecast = ['sunny', 'cloudy', 'cloudy', 'cloudy', 'sunny'];
     return this.forecast;
   }
 }
