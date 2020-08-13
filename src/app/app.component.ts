@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { WeatherService } from './weather.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,7 @@ export class AppComponent {
   city: string = '';
   submitted: boolean = false;
 
-  constructor() {
+  constructor(private weatherService: WeatherService) {
     this.weatherForm = new FormGroup({
       city: new FormControl(this.city, Validators.required),
     });
