@@ -43,9 +43,9 @@ describe('AppComponent', () => {
     expect(app.weatherForm.valid).toBeTrue();
   });
 
-  it('should set submitted to true', () => {
+  it('should submit only if form is valid', () => {
     app.onSubmit();
-    expect(app.submitted).toBeTrue();
+    expect(app.submitted).toBeFalse();
   });
 
   it('should get mock weather data from WeatherService', () => {

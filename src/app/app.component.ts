@@ -30,8 +30,9 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('you submitted the form!');
-    this.submitted = true;
-    this.getForecast();
+    if (this.weatherForm.valid) {
+      this.submitted = true;
+      this.getForecast();
+    }
   }
 }
