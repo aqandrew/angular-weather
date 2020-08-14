@@ -3,7 +3,7 @@
   <form [formGroup]="weatherForm" (ngSubmit)="onSubmit()">
     <label for="city">Please enter a city:</label>
     <!-- TODO Show error state if city is empty on submit -->
-    <input type="text" formControlName="city" required />
+    <input type="text" id="city" formControlName="city" required />
     <button type="submit">Get Forecast</button>
     <p>
       You can specify a country using a
@@ -23,6 +23,20 @@
     <h2>
       5-Day Forecast for {{ forecast.city?.name }}, {{ forecast.city?.country }}
     </h2>
+    <form [formGroup]="forecastForm">
+      <label for="showMax">
+        Show high
+        <input type="checkbox" id="showMax" formControlName="showMax"
+      /></label>
+      <label for="showMean">
+        Show mean
+        <input type="checkbox" id="showMean" formControlName="showMean"
+      /></label>
+      <label for="showMin">
+        Show low
+        <input type="checkbox" id="showMin" formControlName="showMin"
+      /></label>
+    </form>
     <ol>
       <li *ngFor="let item of forecast5Days">
         <h3>
@@ -34,10 +48,9 @@
             })
           }}
         </h3>
-        <p>Mean: {{ formatTemperature(item.tempMean) }}</p>
-        <p>
-          {{ formatTemperatureRange(item.tempMin, item.tempMax) }}
-        </p>
+        <p [hidden]="!showMax">High: {{ formatTemperature(item.tempMax) }}</p>
+        <p [hidden]="!showMean">Mean: {{ formatTemperature(item.tempMean) }}</p>
+        <p [hidden]="!showMin">Low: {{ formatTemperature(item.tempMin) }}</p>
       </li>
     </ol>
   </div>

@@ -13,19 +13,40 @@ export class AppComponent {
   JSON: any;
   title = 'angular-weather';
   weatherForm: FormGroup;
+  forecastForm: FormGroup;
   submitted: boolean = false;
   forecast: any;
   forecast5Days: any;
+  showTempMax: boolean = true;
+  showTempMean: boolean = true;
+  showTempMin: boolean = true;
 
   constructor(private weatherService: WeatherService) {
     this.JSON = JSON;
     this.weatherForm = new FormGroup({
       city: new FormControl('', Validators.required),
     });
+    this.forecastForm = new FormGroup({
+      showMax: new FormControl(true),
+      showMean: new FormControl(true),
+      showMin: new FormControl(true),
+    });
   }
 
-  get city(): any {
+  get city(): string {
     return this.weatherForm.get('city').value;
+  }
+
+  get showMax(): boolean {
+    return this.forecastForm.get('showMax').value;
+  }
+
+  get showMean(): boolean {
+    return this.forecastForm.get('showMean').value;
+  }
+
+  get showMin(): boolean {
+    return this.forecastForm.get('showMin').value;
   }
 
   getForecast(): void {
@@ -109,11 +130,6 @@ export class AppComponent {
   // TODO Move this to utils and test it
   formatTemperature(n: number): string {
     return `${n.toFixed(0)}\u00b0 F`;
-  }
-
-  // TODO Move this to utils and test it
-  formatTemperatureRange(min: number, max: number): string {
-    return `${min.toFixed(0)} - ${max.toFixed(0)}\u00b0 F`;
   }
 
   onSubmit(): void {
