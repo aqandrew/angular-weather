@@ -97,14 +97,23 @@ export class AppComponent {
           );
           knownWeatherInfo.itemsWithThisDate++;
           knownWeatherInfo.tempSum += currentTemp;
-          knownWeatherInfo.tempMean = (
-            knownWeatherInfo.tempSum / knownWeatherInfo.itemsWithThisDate
-          ).toFixed(2);
+          knownWeatherInfo.tempMean =
+            knownWeatherInfo.tempSum / knownWeatherInfo.itemsWithThisDate;
         }
       }
 
       return accumulator;
     }, []);
+  }
+
+  // TODO Move this to utils and test it
+  formatTemperature(n: number): string {
+    return `${n.toFixed(0)}\u00b0 F`;
+  }
+
+  // TODO Move this to utils and test it
+  formatTemperatureRange(min: number, max: number): string {
+    return `${min.toFixed(0)} - ${max.toFixed(0)}\u00b0 F`;
   }
 
   onSubmit(): void {

@@ -25,7 +25,19 @@
     </h2>
     <ol>
       <li *ngFor="let item of forecast5Days">
-        <pre>{{ JSON.stringify(item, null, 2) }}</pre>
+        <h3>
+          {{
+            item.date.toLocaleDateString(undefined, {
+              weekday: "long",
+              month: "numeric",
+              day: "numeric"
+            })
+          }}
+        </h3>
+        <p>Mean: {{ formatTemperature(item.tempMean) }}</p>
+        <p>
+          {{ formatTemperatureRange(item.tempMin, item.tempMax) }}
+        </p>
       </li>
     </ol>
   </div>
