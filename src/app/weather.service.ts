@@ -18,6 +18,7 @@ export class WeatherService {
     let requestOptions = {
       params: {
         q: city,
+        units: 'imperial',
         appid: this.apiKey,
       },
     };
