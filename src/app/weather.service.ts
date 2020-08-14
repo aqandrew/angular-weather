@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 
@@ -15,7 +14,7 @@ export class WeatherService {
 
   constructor(private http: HttpClient) {}
 
-  getForecast(city: string) {
+  getForecast(city: string): Observable<any> {
     let requestOptions = {
       params: {
         q: city,

@@ -26,23 +26,20 @@ export class AppComponent {
   }
 
   getForecast(): void {
-    this.weatherService
-      .getForecast(this.city)
-      .toPromise()
-      .then(
-        // TODO res: HttpResponse<ExpectedType>
-        (res: any) => {
-          this.forecast = res.list;
-          console.log('got weather data:', this.forecast);
-        },
-        (err: HttpErrorResponse) => {
-          if (err.statusText === 'Not Found') {
-            alert('City not found.');
-          } else {
-            console.error('Error getting forecast:', err);
-          }
+    this.weatherService.getForecast(this.city).subscribe(
+      // TODO data: HttpResponse<ExpectedType>
+      (data: any) => {
+        this.forecast = data.list;
+        console.log('App got forecast:', this.forecast);
+      },
+      (error: HttpErrorResponse) => {
+        if (error.statusText === 'Not Found') {
+          alert('City not found.');
+        } else {
+          console.error('Error getting forecast:', error);
         }
-      );
+      }
+    );
   }
 
   onSubmit(): void {

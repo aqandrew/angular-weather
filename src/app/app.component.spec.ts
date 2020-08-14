@@ -48,12 +48,4 @@ describe('AppComponent', () => {
     app.onSubmit();
     expect(app.submitted).toBeFalse();
   });
-
-  it('should get 40 3-hour increments of forecast data from WeatherService', () => {
-    app.weatherForm.controls['city'].setValue('bar');
-    app.onSubmit();
-    // TODO How to wait for forecast length to have been set?
-    // (probably Observables)
-    expect(app.forecast.length).toBe(40);
-  });
 });
