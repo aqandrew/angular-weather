@@ -1,58 +1,79 @@
-<!-- TODO Testing to see if Tailwind works -->
-<main class="bg-teal-400">
-  <h1>Hello. ☀️</h1>
-  <form [formGroup]="weatherForm" (ngSubmit)="onSubmit()">
-    <label for="city">Please enter a city:</label>
-    <!-- TODO Show error state if city is empty on submit -->
-    <input type="text" id="city" formControlName="city" required />
-    <button type="submit">Get Forecast</button>
-    <p>
-      You can specify a country using a
-      <a
-        href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements"
-        target="_blank"
-        rel="noopener noreferrer"
-        >two-letter country code</a
-      >.
-    </p>
-    <p>
-      For example, you can search for Springfield, Belize by typing
-      "springfield,bz".
-    </p>
-  </form>
-  <div *ngIf="forecast !== undefined">
-    <h2>
-      5-Day Forecast for {{ forecast.city?.name }}, {{ forecast.city?.country }}
-    </h2>
-    <form [formGroup]="forecastForm">
-      <label for="showMax">
-        Show high
-        <input type="checkbox" id="showMax" formControlName="showMax"
-      /></label>
-      <label for="showMean">
-        Show mean
-        <input type="checkbox" id="showMean" formControlName="showMean"
-      /></label>
-      <label for="showMin">
-        Show low
-        <input type="checkbox" id="showMin" formControlName="showMin"
-      /></label>
+<div class="h-full w-full pt-8 bg-blue-400">
+  <main class="max-w-xl lg:max-w-3xl mx-auto p-4 bg-white rounded shadow-lg">
+    <h1 class="text-center text-5xl mb-3">Hello. ☀️</h1>
+    <form [formGroup]="weatherForm" (ngSubmit)="onSubmit()">
+      <label for="city">Please enter a city:</label>
+      <!-- TODO Show error state if city is empty on submit -->
+      <div class="w-full flex mb-2">
+        <input
+          type="text"
+          id="city"
+          formControlName="city"
+          class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-l py-2 px-3 block flex-1 appearance-none"
+          required
+        />
+        <button
+          type="submit"
+          class="py-2 px-3 rounded-r bg-green-600 hover:bg-green-700 text-white"
+        >
+          Get Forecast
+        </button>
+      </div>
+      <div class="text-sm text-gray-700">
+        <p>
+          You can specify a country using a
+          <a
+            href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline font-bold text-blue-600"
+            >two-letter country code</a
+          >.
+        </p>
+        <p>
+          For example, you can search for Springfield, Belize by typing
+          <span class="p-1 border border-gray-300 rounded">springfield,bz</span
+          >.
+        </p>
+      </div>
     </form>
-    <ol>
-      <li *ngFor="let item of forecast5Days">
-        <h3>
-          {{
-            item.date.toLocaleDateString(undefined, {
-              weekday: "long",
-              month: "numeric",
-              day: "numeric"
-            })
-          }}
-        </h3>
-        <p [hidden]="!showMax">High: {{ formatTemperature(item.tempMax) }}</p>
-        <p [hidden]="!showMean">Mean: {{ formatTemperature(item.tempMean) }}</p>
-        <p [hidden]="!showMin">Low: {{ formatTemperature(item.tempMin) }}</p>
-      </li>
-    </ol>
-  </div>
-</main>
+    <div *ngIf="forecast !== undefined">
+      <h2>
+        5-Day Forecast for {{ forecast.city?.name }},
+        {{ forecast.city?.country }}
+      </h2>
+      <form [formGroup]="forecastForm">
+        <label for="showMax">
+          Show high
+          <input type="checkbox" id="showMax" formControlName="showMax"
+        /></label>
+        <label for="showMean">
+          Show mean
+          <input type="checkbox" id="showMean" formControlName="showMean"
+        /></label>
+        <label for="showMin">
+          Show low
+          <input type="checkbox" id="showMin" formControlName="showMin"
+        /></label>
+      </form>
+      <ol>
+        <li *ngFor="let item of forecast5Days">
+          <h3>
+            {{
+              item.date.toLocaleDateString(undefined, {
+                weekday: "long",
+                month: "numeric",
+                day: "numeric"
+              })
+            }}
+          </h3>
+          <p [hidden]="!showMax">High: {{ formatTemperature(item.tempMax) }}</p>
+          <p [hidden]="!showMean">
+            Mean: {{ formatTemperature(item.tempMean) }}
+          </p>
+          <p [hidden]="!showMin">Low: {{ formatTemperature(item.tempMin) }}</p>
+        </li>
+      </ol>
+    </div>
+  </main>
+</div>
