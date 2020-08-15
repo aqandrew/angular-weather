@@ -31,7 +31,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('main h1').textContent).toContain(
-      'Hello. ☀️'
+      `☀️How's the weather?`
     );
   });
 
@@ -39,13 +39,10 @@ describe('AppComponent', () => {
     expect(app.weatherForm.valid).toBeFalse();
   });
 
-  it('should valid when city is not empty', () => {
+  it('should be valid when city is not empty', () => {
     app.weatherForm.controls['city'].setValue('foo');
     expect(app.weatherForm.valid).toBeTrue();
   });
 
-  it('should submit only if form is valid', () => {
-    app.onSubmit();
-    expect(app.submitted).toBeFalse();
-  });
+  // TODO Add form validation tests
 });
