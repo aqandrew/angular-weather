@@ -1,11 +1,21 @@
 <div class="h-full w-full my-8">
   <main class="max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto">
     <div class="px-4 py-6 bg-white rounded shadow-lg">
-      <h1
-        class="text-center text-5xl leading-none sm:leading-normal mb-4 font-bold"
-      >
-        How's the weather? ☀️
-      </h1>
+      <div class="mb-6">
+        <h1 class="text-center text-5xl leading-tight font-bold">
+          ☀️<br />How's the weather?
+        </h1>
+        <p class="text-center text-sm">
+          by
+          <a
+            href="https://github.com/dawneraq"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline font-bold text-blue-600"
+            >Andrew Aquino</a
+          >
+        </p>
+      </div>
       <form [formGroup]="weatherForm" (ngSubmit)="onSubmit()">
         <label for="city" class="block mb-2">Please enter a city:</label>
         <div class="w-full mb-2">
@@ -31,7 +41,7 @@
             A city is required.
           </div>
         </div>
-        <div class="text-sm text-gray-700">
+        <div class="text-xs text-gray-700">
           <p>
             You can specify a country using a
             <a
