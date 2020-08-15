@@ -49,6 +49,14 @@ export class AppComponent {
     return this.forecastForm.get('showMin').value;
   }
 
+  isWeatherFormInputValid(fieldName: string): boolean {
+    return !(
+      this.weatherForm.controls[fieldName].invalid &&
+      (this.weatherForm.controls[fieldName].dirty ||
+        this.weatherForm.controls[fieldName].touched)
+    );
+  }
+
   getForecast(): void {
     this.weatherService.getForecast(this.city).subscribe(
       // TODO data: HttpResponse<ExpectedType>
@@ -56,6 +64,7 @@ export class AppComponent {
         console.log('App got data:', data);
         this.forecast = data;
         this.getForecast5Days(data.list);
+        this.submitted = false;
       },
       (error: HttpErrorResponse) => {
         if (error.statusText === 'Not Found') {
@@ -69,7 +78,7 @@ export class AppComponent {
 
   // Massage API data into 5-day forecast
   getForecast5Days(data: any): void {
-    console.log('TODO massage  forecast data:', data);
+    console.log('massaging forecast data:', data);
 
     // TODO Move this to utils and test it
     const isSameDate = (d1: Date, d2: Date): boolean =>
@@ -133,8 +142,9 @@ export class AppComponent {
   }
 
   onSubmit(): void {
+    this.submitted = true;
+
     if (this.weatherForm.valid) {
-      this.submitted = true;
       this.getForecast();
     }
   }
