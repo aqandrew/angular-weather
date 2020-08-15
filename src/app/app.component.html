@@ -1,82 +1,103 @@
 <div class="h-full w-full my-8">
-  <main
-    class="max-w-xl lg:max-w-3xl mx-auto p-4 pb-6 bg-white rounded shadow-lg"
-  >
-    <h1 class="text-center text-5xl mb-4">How's the weather? ☀️</h1>
-    <form [formGroup]="weatherForm" (ngSubmit)="onSubmit()">
-      <label for="city" class="block mb-2">Please enter a city:</label>
-      <div class="w-full mb-2">
-        <div class="flex mb-2">
-          <input
-            type="text"
-            id="city"
-            formControlName="city"
-            class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-l py-2 px-3 block flex-1 appearance-none"
-            required
-          />
-          <button
-            type="submit"
-            class="py-2 px-3 rounded-r bg-green-600 hover:bg-green-700 text-white"
+  <main class="max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto">
+    <div class="px-4 py-6 bg-white rounded shadow-lg">
+      <h1
+        class="text-center text-5xl leading-none sm:leading-normal mb-4 font-bold"
+      >
+        How's the weather? ☀️
+      </h1>
+      <form [formGroup]="weatherForm" (ngSubmit)="onSubmit()">
+        <label for="city" class="block mb-2">Please enter a city:</label>
+        <div class="w-full mb-2">
+          <div class="flex mb-2">
+            <input
+              type="text"
+              id="city"
+              formControlName="city"
+              class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-l py-2 px-3 block flex-1 appearance-none"
+              required
+            />
+            <button
+              type="submit"
+              class="py-2 px-3 rounded-r bg-green-600 hover:bg-green-700 text-white"
+            >
+              Get Forecast
+            </button>
+          </div>
+          <div
+            *ngIf="submitted && !isWeatherFormInputValid('city')"
+            class="py-2 px-3 bg-red-300 text-red-900 border border-red-400 rounded"
           >
-            Get Forecast
-          </button>
+            A city is required.
+          </div>
         </div>
-        <div
-          *ngIf="submitted && !isWeatherFormInputValid('city')"
-          class="py-2 px-3 bg-red-300 text-red-900 border border-red-400 rounded"
-        >
-          A city is required.
+        <div class="text-sm text-gray-700">
+          <p>
+            You can specify a country using a
+            <a
+              href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline font-bold text-blue-600"
+              >two-letter country code</a
+            >.
+          </p>
+          <p>
+            For example, you can search for Springfield, Belize by typing
+            <span class="p-1 border border-gray-300 rounded"
+              >springfield,bz</span
+            >.
+          </p>
         </div>
-      </div>
-      <div class="text-sm text-gray-700">
-        <p>
-          You can specify a country using a
-          <a
-            href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="underline font-bold text-blue-600"
-            >two-letter country code</a
-          >.
-        </p>
-        <p>
-          For example, you can search for Springfield, Belize by typing
-          <span class="p-1 border border-gray-300 rounded">springfield,bz</span
-          >.
-        </p>
-      </div>
-    </form>
+      </form>
+    </div>
     <!-- TODO There's probably a more logical way to name "submitted" -->
-    <div *ngIf="submitted === false && forecast !== undefined">
-      <h2>
+    <div
+      *ngIf="submitted === false && forecast !== undefined"
+      class="mt-6 px-4 py-6 bg-white rounded shadow-lg"
+    >
+      <h2 class="mb-4 text-2xl font-bold">
         5-Day Forecast for {{ forecast.city?.name }},
         {{ forecast.city?.country }}
       </h2>
-      <form [formGroup]="forecastForm">
-        <label for="showMax">
+      <form [formGroup]="forecastForm" class="mb-3">
+        <label
+          for="showMax"
+          class="w-32 inline-flex justify-between items-center mb-2 mr-2 py-2 px-3 rounded-full border cursor-pointer select-none"
+        >
           Show high
           <input type="checkbox" id="showMax" formControlName="showMax"
         /></label>
-        <label for="showMean">
+        <label
+          for="showMean"
+          class="w-32 inline-flex justify-between items-center mr-2 py-2 px-3 rounded-full border cursor-pointer select-none"
+        >
           Show mean
           <input type="checkbox" id="showMean" formControlName="showMean"
         /></label>
-        <label for="showMin">
+        <label
+          for="showMin"
+          class="w-32 inline-flex justify-between items-center mr-2 py-2 px-3 rounded-full border cursor-pointer select-none"
+        >
           Show low
           <input type="checkbox" id="showMin" formControlName="showMin"
         /></label>
       </form>
-      <ol>
-        <li *ngFor="let item of forecast5Days">
-          <h3>
+      <ol class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2">
+        <li
+          *ngFor="let item of forecast5Days | slice: 0:5"
+          class="py-3 px-2 rounded border border-gray-300 shadow text-center"
+        >
+          <h3 class="text-xl font-bold">
             {{
               item.date.toLocaleDateString(undefined, {
-                weekday: "long",
+                weekday: "short",
                 month: "numeric",
                 day: "numeric"
               })
             }}
           </h3>
+          <!-- TODO Icons here would be cool -->
           <p [hidden]="!showMax">High: {{ formatTemperature(item.tempMax) }}</p>
           <p [hidden]="!showMean">
             Mean: {{ formatTemperature(item.tempMean) }}
